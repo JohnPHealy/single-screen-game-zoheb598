@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public void Move(InputAction.CallbackContext context)
     {
-        
+        print(context.ReadValue<float>());
+        print("Test");
+        transform.position = Vector3.right * context.ReadValue<float>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Jump(InputAction.CallbackContext context)
     {
-        
+        print(context.ReadValue<bool>());
     }
+
 }
