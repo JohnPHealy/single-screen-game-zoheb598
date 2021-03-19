@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     {
         var moveAxis = Vector3.right * moveDir;
 
-        if (-maxSpeed < myRB.velocity.x && myRB.velocity.x < maxSpeed)
+        if (Mathf.Abs(myRB.velocity.x) < maxSpeed)
         {
             myRB.AddForce(moveAxis * moveSpeed, ForceMode2D.Force);
         }
@@ -46,8 +46,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canJump)
         {
-            myRB.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
-            canJump = false;
+            if (context.started)
+            {
+                myRB.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+                canJump = false;
+            }
+        }
+
+        if (context.canceled)
+        {
+            myRB.velocity = new Vector2(myRB.velocity.x, y: 0f);
         }
     }
 
